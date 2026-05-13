@@ -5,6 +5,10 @@ import { env } from '@/utils/env';
 
 let supabaseClient: SupabaseClient<Database> | null = null;
 
+function normalizeSupabaseUrl(url: string): string {
+  return url.replace(/\/rest\/v1\/?$/, '');
+}
+
 export function getSupabaseClient(): SupabaseClient<Database> {
   if (!env.supabaseUrl) {
     throw new Error('SUPABASE_URL is required to create the Supabase client.');
@@ -14,7 +18,7 @@ export function getSupabaseClient(): SupabaseClient<Database> {
     throw new Error('SUPABASE_SERVICE_ROLE_KEY is required to create the Supabase client.');
   }
 
-  supabaseClient ??= createClient<Database>(env.supabaseUrl, env.supabaseServiceRoleKey, {
+  supabaseClient ??= createClient<Database>(normalizeSupabaseUrl(env.supabaseUrl), env.supabaseServiceRoleKey, {
     auth: {
       persistSession: false,
       autoRefreshToken: false,

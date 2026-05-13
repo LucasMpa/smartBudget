@@ -2,7 +2,29 @@ export type Json = string | number | boolean | null | { [key: string]: Json | un
 
 export type Database = {
   public: {
-    Tables: Record<string, never>;
+    Tables: {
+      expenses: {
+        Row: {
+          id: string;
+          title: string;
+          amount: number;
+          created_at: string;
+        };
+        Insert: {
+          id?: string;
+          title: string;
+          amount: number;
+          created_at?: string;
+        };
+        Update: {
+          id?: string;
+          title?: string;
+          amount?: number;
+          created_at?: string;
+        };
+        Relationships: [];
+      };
+    };
     Views: Record<string, never>;
     Functions: Record<string, never>;
     Enums: Record<string, never>;
