@@ -1,0 +1,58 @@
+{
+  "name": "SmartBudget - Telegram Parse Expense Example",
+  "nodes": [
+    {
+      "parameters": {
+        "updates": ["message"]
+      },
+      "id": "telegram-trigger",
+      "name": "Telegram Trigger",
+      "type": "n8n-nodes-base.telegramTrigger",
+      "typeVersion": 1.2,
+      "position": [0, 0],
+      "credentials": {
+        "telegramApi": {
+          "id": "replace-with-telegram-credential-id",
+          "name": "Telegram Bot"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "http://api:3333/parse-expense",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={ \"text\": $json.message.text }",
+        "options": {}
+      },
+      "id": "parse-expense-api",
+      "name": "Parse Expense API",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [260, 0]
+    }
+  ],
+  "connections": {
+    "Telegram Trigger": {
+      "main": [
+        [
+          {
+            "node": "Parse Expense API",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "pinData": {},
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "staticData": null,
+  "tags": [],
+  "triggerCount": 0,
+  "updatedAt": "2026-05-12T00:00:00.000Z",
+  "versionId": "smartbudget-initial-example"
+}

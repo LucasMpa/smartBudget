@@ -1,0 +1,39 @@
+services:
+  api:
+    build:
+      context: ./api
+      dockerfile: Dockerfile
+    container_name: smartbudget-api
+    command: npm run dev
+    env_file:
+      - ./api/.env
+    ports:
+      - "${API_PORT:-3333}:3333"
+    volumes:
+      - ./api:/app
+      - /app/node_modules
+    networks:
+      - smartbudget
+
+  n8n:
+    image: n8nio/n8n:latest
+    container_name: smartbudget-n8n
+    env_file:
+      - ./n8n/.env
+    ports:
+      - "${N8N_PORT:-5678}:5678"
+    volumes:
+      - n8n_data:/home/node/.n8n
+      - ./n8n/workflows:/workflows
+    depends_on:
+      - api
+    networks:
+      - smartbudget
+
+volumes:
+  n8n_data:
+
+networks:
+  smartbudget:
+    driver: bridge
+
