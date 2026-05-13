@@ -25,6 +25,9 @@ n8n should orchestrate messages and integrations. Parsing, validation, categoriz
 │   │   ├── types
 │   │   ├── utils
 │   │   └── validators
+│   ├── supabase
+│   │   ├── config.toml
+│   │   └── migrations
 │   ├── Dockerfile
 │   ├── package.json
 │   └── tsconfig.json
@@ -135,6 +138,21 @@ The API is prepared for:
 - Supabase persistence
 - event-oriented workflows triggered by n8n
 
+## Supabase
+
+The API includes a lazy Supabase client at:
+
+```text
+api/src/clients/supabaseClient.ts
+```
+
+Configure these variables in `api/.env` before using persistence services:
+
+```env
+SUPABASE_URL=
+SUPABASE_SERVICE_ROLE_KEY=
+```
+
 Suggested future service boundaries:
 
 - `ExpenseParsingService`
@@ -142,4 +160,3 @@ Suggested future service boundaries:
 - `ExpensePersistenceService`
 - `OpenAiFallbackService`
 - `TelegramMessageNormalizer`
-
