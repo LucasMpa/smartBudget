@@ -27,9 +27,15 @@ export function createExpenseRouter({
     } catch (error) {
       const message = error instanceof Error ? error.message : 'Invalid request.';
 
-      response.status(400).json({
+      response.status(200).json({
         success: false,
-        error: message,
+        error: {
+          code: 'INVALID_PAYLOAD',
+          message,
+          example: {
+            text: 'ifood 90',
+          },
+        },
       });
       return;
     }
@@ -37,7 +43,7 @@ export function createExpenseRouter({
     const result = expenseParsingService(payload.text);
 
     if (!result.success) {
-      response.status(422).json(result);
+      response.status(200).json(result);
       return;
     }
 
@@ -53,7 +59,10 @@ export function createExpenseRouter({
 
       response.status(500).json({
         success: false,
-        error: message,
+        error: {
+          code: 'EXPENSE_PERSISTENCE_FAILED',
+          message,
+        },
       });
     }
   });

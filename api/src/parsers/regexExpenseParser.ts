@@ -13,7 +13,11 @@ export const parseExpenseWithRegex: ExpenseParser = (input: string): ParseExpens
   if (!normalizedInput) {
     return {
       success: false,
-      error: 'Expense text is empty.',
+      error: {
+        code: 'EMPTY_EXPENSE_TEXT',
+        message: 'Expense text is empty.',
+        example: 'ifood 90',
+      },
     };
   }
 
@@ -24,7 +28,11 @@ export const parseExpenseWithRegex: ExpenseParser = (input: string): ParseExpens
   if (!category || !rawAmount) {
     return {
       success: false,
-      error: 'Could not parse expense. Expected format: "category amount".',
+      error: {
+        code: 'INVALID_EXPENSE_TEXT',
+        message: 'Could not identify category and amount.',
+        example: 'ifood 90',
+      },
     };
   }
 
@@ -33,7 +41,11 @@ export const parseExpenseWithRegex: ExpenseParser = (input: string): ParseExpens
   if (!Number.isFinite(amount) || amount <= 0) {
     return {
       success: false,
-      error: 'Expense amount must be a positive number.',
+      error: {
+        code: 'INVALID_EXPENSE_AMOUNT',
+        message: 'Expense amount must be a positive number.',
+        example: 'mercado 120,50',
+      },
     };
   }
 

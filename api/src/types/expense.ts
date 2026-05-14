@@ -26,6 +26,12 @@ export type ExpenseParsingUseCase = (text: string) => ParseExpenseResult;
 
 export type ExpensePersistenceUseCase = (expense: ExpenseData) => Promise<PersistedExpenseData>;
 
+export type ExpenseError = {
+  code: string;
+  message: string;
+  example?: string;
+};
+
 export type ParseExpenseResult =
   | {
       success: true;
@@ -33,5 +39,5 @@ export type ParseExpenseResult =
     }
   | {
       success: false;
-      error: string;
+      error: ExpenseError;
     };
