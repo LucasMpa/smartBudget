@@ -3,7 +3,7 @@ import type { ExpenseParser, ParseExpenseResult } from '@/types/expense';
 const CURRENCY_PATTERN = String.raw`(?:R\$\s*)?`;
 const AMOUNT_PATTERN = String.raw`(\d+(?:[.,]\d{1,2})?)`;
 const EXPENSE_PATTERN = new RegExp(
-  String.raw`^\s*(?<description>.+?)\s+${CURRENCY_PATTERN}(?<amount>${AMOUNT_PATTERN})\s*$`,
+  String.raw`^\s*(?<category>.+?)\s+${CURRENCY_PATTERN}(?<amount>${AMOUNT_PATTERN})\s*$`,
   'i',
 );
 
@@ -18,13 +18,13 @@ export const parseExpenseWithRegex: ExpenseParser = (input: string): ParseExpens
   }
 
   const match = normalizedInput.match(EXPENSE_PATTERN);
-  const description = match?.groups?.description?.trim();
+  const category = match?.groups?.category?.trim();
   const rawAmount = match?.groups?.amount;
 
-  if (!description || !rawAmount) {
+  if (!category || !rawAmount) {
     return {
       success: false,
-      error: 'Could not parse expense. Expected format: "description amount".',
+      error: 'Could not parse expense. Expected format: "category amount".',
     };
   }
 
@@ -40,7 +40,7 @@ export const parseExpenseWithRegex: ExpenseParser = (input: string): ParseExpens
   return {
     success: true,
     data: {
-      description,
+      category,
       amount,
     },
   };

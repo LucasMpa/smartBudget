@@ -4,7 +4,7 @@ services:
       context: ./api
       dockerfile: Dockerfile
     container_name: smartbudget-api
-    command: npm run dev
+    command: sh -c "npm install && npm run dev"
     env_file:
       - ./api/.env
     ports:
@@ -20,6 +20,8 @@ services:
     container_name: smartbudget-n8n
     env_file:
       - ./n8n/.env
+    environment:
+      - WEBHOOK_URL=https://atmospheric-hudson-freeware-columbus.trycloudflare.com
     ports:
       - "${N8N_PORT:-5678}:5678"
     volumes:
@@ -36,4 +38,3 @@ volumes:
 networks:
   smartbudget:
     driver: bridge
-

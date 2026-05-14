@@ -18,12 +18,16 @@ export function getSupabaseClient(): SupabaseClient<Database> {
     throw new Error('SUPABASE_SERVICE_ROLE_KEY is required to create the Supabase client.');
   }
 
-  supabaseClient ??= createClient<Database>(normalizeSupabaseUrl(env.supabaseUrl), env.supabaseServiceRoleKey, {
-    auth: {
-      persistSession: false,
-      autoRefreshToken: false,
+  supabaseClient ??= createClient<Database>(
+    normalizeSupabaseUrl(env.supabaseUrl),
+    env.supabaseServiceRoleKey,
+    {
+      auth: {
+        persistSession: false,
+        autoRefreshToken: false,
+      },
     },
-  });
+  );
 
   return supabaseClient;
 }

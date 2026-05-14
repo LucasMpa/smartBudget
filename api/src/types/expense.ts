@@ -1,10 +1,16 @@
 export type ExpenseData = {
-  description: string;
+  category: string;
   amount: number;
 };
 
-export type PersistedExpenseData = ExpenseData & {
+export type PersistedExpenseData = {
   id: string;
+  amount: number;
+  category: {
+    id: string;
+    name: string;
+    slug: string;
+  };
   createdAt: string;
 };
 

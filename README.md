@@ -79,8 +79,14 @@ Expected response:
 {
   "success": true,
   "data": {
-    "description": "ifood",
-    "amount": 38
+    "id": "9d1b6f9e-0e6d-4b1b-9ad1-6dfc2c7e0a11",
+    "amount": 38,
+    "category": {
+      "id": "4a34d2f3-dbe9-4d51-a88d-6fca8f2a9772",
+      "name": "ifood",
+      "slug": "ifood"
+    },
+    "createdAt": "2026-05-13T03:00:39.000Z"
   }
 }
 ```
